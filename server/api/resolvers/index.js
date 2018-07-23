@@ -13,7 +13,7 @@
  *  The user resolver has been completed as an example of what you'll need to do.
  *  Finish of the rest of the resolvers when you're ready.
  */
-const { ApolloError } = require('apollo-server')
+const { ApolloError } = require('apollo-server-express')
 
 // @TODO: Uncomment these lines later when we add auth
 // const jwt = require("jsonwebtoken")
@@ -21,9 +21,9 @@ const { ApolloError } = require('apollo-server')
 // -------------------------------
 const { UploadScalar, DateScalar } = require('../custom-types')
 
-module.exports = function(app) {
+module.exports = function (app) {
   return {
-    Upload: UploadScalar,
+    // Upload: UploadScalar,
     // Date: DateScalar,
 
     Query: {

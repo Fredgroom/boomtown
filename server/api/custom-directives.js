@@ -1,5 +1,5 @@
 const { defaultFieldResolver } = require('graphql')
-const { ForbiddenError } = require('apollo-server')
+const { ForbiddenError } = require('apollo-server-express')
 const { SchemaDirectiveVisitor } = require('graphql-tools')
 
 class AuthDirective extends SchemaDirectiveVisitor {

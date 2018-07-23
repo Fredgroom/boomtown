@@ -6,6 +6,8 @@ import gql from 'graphql-tag'
 
 const ItemFields = gql`
   fragment ItemFields on Item {
+
+    
     # @TODO: Create a fragment to query the following fields for an item:
     #
     # id

@@ -1,5 +1,4 @@
-var strs = require('stringstream')
-
+const strs = require('stringstream')
 function tagsQueryString(tags, itemid, result) {
   /**
    * Challenge:
@@ -10,18 +9,17 @@ function tagsQueryString(tags, itemid, result) {
   return length === 0
     ? `${result};`
     : tags.shift() &&
-        tagsQueryString(
-          tags,
-          itemid,
-          `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
-        )
+    tagsQueryString(
+      tags,
+      itemid,
+      `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
+    )
 }
-
-module.exports = function(postgres) {
+module.exports = (postgres) => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: '', // @TODO: Authentication - Server
+        text: 'INSERT into users(fullname, email, password) VALUES ($1, $2, $3) ', // @TODO: Authentication - Server
         values: [fullname, email, password]
       }
       try {
@@ -40,7 +38,8 @@ module.exports = function(postgres) {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: '', // @TODO: Authentication - Server
+        text: '',
+         // @TODO: Authentication - Server
         values: [email]
       }
       try {
@@ -55,7 +54,7 @@ module.exports = function(postgres) {
       /**
        *  @TODO: Handling Server Errors
        *
-       *  Inside of our resuorce methods we get to determine wen and how errors are returned
+       *  Inside of our resource methods we get to determine wen and how errors are returned
        *  to our resolvers using try / catch / throw semantics.
        *
        *  Ideally, the errors that we'll throw from our resource should be able to be used by the client
@@ -73,10 +72,9 @@ module.exports = function(postgres) {
        */
 
       const findUserQuery = {
-        text: '', // @TODO: Basic queries
+        text: 'SELECT id, email, fullname, bio FROM users WHERE users.id = $1', // @TODO: Basic queries
         values: [id]
       }
-
       /**
        *  Refactor the following code using the error handling logic described above.
        *  When you're done here, ensure all of the resource methods in this file
@@ -87,10 +85,11 @@ module.exports = function(postgres) {
        */
 
       const user = await postgres.query(findUserQuery)
-      return user
+      return user.rows[0];
       // -------------------------------
     },
     async getItems(idToOmit) {
+      const whereClause = idToOmit ? `WHERE items.ownerid != ${idToOmit}` : '';
       const items = await postgres.query({
         /**
          *  @TODO: Advanced queries
@@ -103,10 +102,10 @@ module.exports = function(postgres) {
          *  to your query text using string interpolation
          */
 
-        text: ``,
+        text: `select * From items ${whereClause} `,
         values: idToOmit ? [idToOmit] : []
       })
-      return items.rows
+      return items.rows[0];
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
@@ -114,7 +113,7 @@ module.exports = function(postgres) {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: ``,
+        text: `select * From items where id = '$1' `,
         values: [id]
       })
       return items.rows
@@ -125,13 +124,18 @@ module.exports = function(postgres) {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: ``,
+        text: `select * From items where borrowerid = '$1'`,
         values: [id]
       })
-      return items.rows
+      return items.rows[0]
     },
     async getTags() {
-      const tags = await postgres.query(/* @TODO: Basic queries */)
+      const tags = await postgres.query({
+        text: `SELECt * FROM items WHERE borrowerid = '$1'`,
+        values: []
+        /* @TODO: Basic queries */
+      
+      });
       return tags.rows
     },
     async getTagsForItem(id) {
@@ -139,7 +143,6 @@ module.exports = function(postgres) {
         text: ``, // @TODO: Advanced queries
         values: [id]
       }
-
       const tags = await postgres.query(tagsQuery)
       return tags.rows
     },
@@ -162,7 +165,6 @@ module.exports = function(postgres) {
        *
        *  Read the method and the comments carefully before you begin.
        */
-
       return new Promise((resolve, reject) => {
         /**
          * Begin transaction by opening a long-lived connection
@@ -174,27 +176,22 @@ module.exports = function(postgres) {
             client.query('BEGIN', err => {
               // Convert image (file stream) to Base64
               const imageStream = image.stream.pipe(strs('base64'))
-
               let base64Str = ''
               imageStream.on('data', data => {
                 base64Str += data
               })
-
               imageStream.on('end', async () => {
                 // Image has been converted, begin saving things
                 const { title, description, tags } = item
-
                 // Generate new Item query
                 // @TODO
                 // -------------------------------
-
                 // Insert new Item
                 // @TODO
                 // -------------------------------
-
                 const imageUploadQuery = {
                   text:
-                    'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                    'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) ',
                   values: [
                     // itemid,
                     image.filename,
@@ -203,27 +200,21 @@ module.exports = function(postgres) {
                     base64Str
                   ]
                 }
-
                 // Upload image
                 const uploadedImage = await client.query(imageUploadQuery)
                 const imageid = uploadedImage.rows[0].id
-
                 // Generate image relation query
                 // @TODO
                 // -------------------------------
-
                 // Insert image
                 // @TODO
                 // -------------------------------
-
                 // Generate tag relationships query (use the'tagsQueryString' helper function provided)
                 // @TODO
                 // -------------------------------
-
                 // Insert tags
                 // @TODO
                 // -------------------------------
-
                 // Commit the entire transaction!
                 client.query('COMMIT', err => {
                   if (err) {
