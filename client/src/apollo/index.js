@@ -7,7 +7,7 @@ import { onError } from 'apollo-link-error'
 const httpWithUploadsLink = createUploadLink({
   includeExtensions: true,
   // @TODO: If `process.env.NODE_ENV !== 'production'`, then use localhost's GraphQL endpoint
-  uri: undefined,
+  uri: process.env.NODE_ENV === 'production' ? 'same-origin' : 'include',
   // -------------------------------
   credentials: process.env.NODE_ENV === 'production' ? 'same-origin' : 'include'
 })
