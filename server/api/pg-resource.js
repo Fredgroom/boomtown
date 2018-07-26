@@ -19,7 +19,7 @@ module.exports = (postgres) => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: 'INSERT into users(fullname, email, password) VALUES ($1, $2, $3) ', // @TODO: Authentication - Server
+        text: 'INSERT into users(fullname, email, password) VALUES ($1, $2, $3) RETURNING *', // @TODO: Authentication - Server
         values: [fullname, email, password]
       }
       try {
@@ -39,7 +39,7 @@ module.exports = (postgres) => {
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
         text: '',
-         // @TODO: Authentication - Server
+        // @TODO: Authentication - Server
         values: [email]
       }
       try {
@@ -89,7 +89,7 @@ module.exports = (postgres) => {
       // -------------------------------
     },
     async getItems(idToOmit) {
-      const whereClause = idToOmit ? `WHERE items.ownerid != ${idToOmit}` : '';
+      const whereClause = idToOmit ? `WHERE items.ownerid != $1` : '';
       const items = await postgres.query({
         /**
          *  @TODO: Advanced queries
@@ -102,48 +102,43 @@ module.exports = (postgres) => {
          *  to your query text using string interpolation
          */
 
-        text: `select * From items ${whereClause} `,
+        text: ` 
+        SELECT
+          id, title, imageurl, description, ownerid, borrowerid, created
+          FROM items
+        ${whereClause}`,
         values: idToOmit ? [idToOmit] : []
       })
-      return items.rows[0];
+      return items.rows;
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
-        text: `select * From items where id = '$1' `,
+        text: `select * From items where ownerid = $1`,
         values: [id]
       })
-      return items.rows
+      return items.rows;
     },
-    async getBorrowedItemsForUser(id) {
+    async getBorrowedItemsForUser(userid) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
-        text: `select * From items where borrowerid = '$1'`,
-        values: [id]
+        text: `select * From items where borrowerid = $1`,
+        values: [userid]
       })
-      return items.rows[0]
+      return items.rows;
     },
     async getTags() {
       const tags = await postgres.query({
-        text: `SELECt * FROM items WHERE borrowerid = '$1'`,
-        values: []
+        text: `SELECT * FROM items WHERE borrowerid = '$1'`,
+        values: [tags]
         /* @TODO: Basic queries */
-      
+
       });
       return tags.rows
     },
-    async getTagsForItem(id) {
-      const tagsQuery = {
-        text: ``, // @TODO: Advanced queries
-        values: [id]
-      }
-      const tags = await postgres.query(tagsQuery)
+    async getTagsForItem(itemid) {
+       const tags = await postgres.query({
+        text: `SELECT * FROM tags, itemtags WHERE itemtags.itemid = $1 AND itemtags.tagid = tags.id`,
+        values: [itemid]
+      })
       return tags.rows
     },
     async saveNewItem({ item, image, user }) {
