@@ -6,6 +6,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
+
 /**
  * @TODO: Uncomment the following lines when authentication is added to the form
  *

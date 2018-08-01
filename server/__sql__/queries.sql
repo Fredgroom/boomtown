@@ -58,7 +58,7 @@ select *
 -- Get all the items borrowed by a given user (ID)
 select * 
     From items
-    where borrowerid = '--borrower id--';
+    where borrowerid is 2;
 
 -- Get all the tags
 select * from tags;
@@ -71,4 +71,41 @@ AND     itemtags.itemid = items.id
 AND     tags.id = itemtags.tagid
 ;
 
- 
+ UPDATE items
+SET title='washing machine',description = 'example text', borrowerid=2
+WHERE ID = 2;
+-- Get all the tags
+SELECT * from tags
+
+-- Get all tags for a given item (ID)
+
+SELECT  tags.title as Tag
+FROM    items, itemtags, tags
+WHERE   items.id = '2'
+AND     itemtags.itemid = items.id
+AND     tags.id = itemtags.tagid;
+
+-- all items with their tags:
+SELECT  items.title as Item, tags.title as Tag
+FROM    items, itemtags, tags
+WHERE   items.id = itemtags.itemid
+AND     itemtags.tagid = tags.id
+;
+
+-- a specific item with its tags:
+SELECT  items.title as Item, tags.title as Tag
+FROM    items, itemtags, tags
+WHERE   items.id = 4
+AND     items.id = itemtags.itemid
+AND     itemtags.tagid = tags.id
+;
+--- count all items in the database:
+SELECT COUNT(*) FROM items;
+-- how many tags, on average, items have:
+SELECT COUNT(itemtags) / COUNT(items)
+FROM itemtags, items;
+
+-- all items sorted by most recently created
+SELECT  items.title, items.created
+FROM    items
+ORDER BY items.created ASC;

@@ -75,14 +75,6 @@ module.exports = (postgres) => {
         text: 'SELECT id, email, fullname, bio FROM users WHERE users.id = $1', // @TODO: Basic queries
         values: [id]
       }
-      /**
-       *  Refactor the following code using the error handling logic described above.
-       *  When you're done here, ensure all of the resource methods in this file
-       *  include a try catch, and throw appropriate errors.
-       *
-       *  Here is an example throw statement: throw 'User was not found.'
-       *  Customize your throw statements so the message can be used by the client.
-       */
 
       const user = await postgres.query(findUserQuery)
       return user.rows[0];
@@ -91,20 +83,16 @@ module.exports = (postgres) => {
     async getItems(idToOmit) {
       const whereClause = idToOmit ? `WHERE items.ownerid != $1` : '';
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *
-         *  Get all Items. If the idToOmit parameter has a value,
-         *  the query should only return Items were the ownerid column
-         *  does not contain the 'idToOmit'
-         *
-         *  Hint: You'll need to use a conditional AND and WHERE clause
-         *  to your query text using string interpolation
-         */
 
         text: ` 
         SELECT
-          id, title, imageurl, description, ownerid, borrowerid, created
+          id, 
+          title, 
+          imageurl, 
+          description, 
+          ownerid, 
+          borrowerid,
+          created
           FROM items
         ${whereClause}`,
         values: idToOmit ? [idToOmit] : []
@@ -127,9 +115,9 @@ module.exports = (postgres) => {
     },
     async getTags() {
       const tags = await postgres.query({
-        text: `SELECT * FROM items WHERE borrowerid = '$1'`,
-        values: [tags]
-        /* @TODO: Basic queries */
+        text: `SELECT id, title
+        FROM tags`,
+        values: []
 
       });
       return tags.rows
