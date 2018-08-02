@@ -11,6 +11,7 @@ import styles from './styles'
 
 const Home = ({ classes }) => {
   return (
+   
     <Grid
       container
       className={classes.root}

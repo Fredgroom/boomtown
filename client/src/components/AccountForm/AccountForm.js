@@ -6,16 +6,9 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
-
-/**
- * @TODO: Uncomment the following lines when authentication is added to the form
- *
- * import { Form, Field } from 'react-final-form'
- *
- * import AuthContainer from '../../containers/AuthContainer'
- * import validate from './helpers/validation'
- */
-
+import AuthContainer from '../../containers/AuthContainer'
+import { Form, Field } from 'react-final-form'
+import validate from './helpers/validation'
 import styles from './styles'
 
 class AccountForm extends Component {
@@ -30,8 +23,8 @@ class AccountForm extends Component {
     const { classes } = this.props
 
     return (
-      // @TODO: Wrap in <AuthContainer />
-      // @TODO: Wrap in Final Form <Form />
+      <AuthContainer>
+     <Form>
       <form
         onSubmit={() => {
           console.log('Submitted')
@@ -41,7 +34,7 @@ class AccountForm extends Component {
         {!this.state.formToggle && (
           <FormControl fullWidth className={classes.formControl}>
             <InputLabel htmlFor="fullname">Username</InputLabel>
-            {/* @TODO: Wrap in a Final Form <Field /> */}
+            <Field >
             <Input
               id="fullname"
               type="text"
@@ -50,12 +43,12 @@ class AccountForm extends Component {
               }}
               value={''}
             />
-            {/* @TODO: Close Final Form <Field /> */}
+            </Field>
           </FormControl>
         )}
         <FormControl fullWidth className={classes.formControl}>
           <InputLabel htmlFor="email">Email</InputLabel>
-          {/* @TODO: Wrap in a Final Form <Field /> */}
+          <Field >
           <Input
             id="email"
             type="text"
@@ -64,11 +57,11 @@ class AccountForm extends Component {
             }}
             value={''}
           />
-          {/* @TODO: Close Final Form <Field /> */}
+          </ Field>
         </FormControl>
         <FormControl fullWidth className={classes.formControl}>
           <InputLabel htmlFor="password">Password</InputLabel>
-          {/* @TODO: Wrap in a Final Form <Field /> */}
+          <Field>
           <Input
             id="password"
             type="password"
@@ -77,7 +70,7 @@ class AccountForm extends Component {
             }}
             value={''}
           />
-          {/* @TODO: Close Final Form <Field /> */}
+          </ Field>
         </FormControl>
         <FormControl className={classes.formControl}>
           <Grid
@@ -120,8 +113,8 @@ class AccountForm extends Component {
           {/* @TODO: Display sign-up and login errors */}
         </Typography>
       </form>
-      // @TODO: Close Final Form <Form />
-      // @TODO: Close <AuthContainer />
+      </ Form >
+      </ AuthContainer>
     )
   }
 }

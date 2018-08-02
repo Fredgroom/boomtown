@@ -8,7 +8,7 @@ import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider as ReduxProvider } from 'react-redux'
 // -------------------------------
-
+import { ViewerProvider } from './context/ViewerProvider'
 import registerServiceWorker from './registerServiceWorker'
 import theme from './theme'
 import client from './apollo'
@@ -16,23 +16,8 @@ import client from './apollo'
 /**
  * @TODO: Initialize Redux Store
  */
- 
-import store from './redux'
- /** 
- * Below in your <App />, wrap a <ReduxProvider /> component around all
- * of the app's children, and pass it the imported `store` as the `store`
- * prop's value.
- */
 
-/**
- * @TODO: Add the Viewer Context
- *
- * import { ViewerProvider } from './context/ViewerProvider'
- *
- * Below in your <App />, wrap the <ViewerProvider /> component around
- * the <BrowserRouter /> component so the router is aware of whether a
- * user is currently logged in and who that user is.
- */
+import store from './redux'
 
 // @TODO: Remove this import once you have your router working below
 import Layout from './routes/Layout'
@@ -41,18 +26,18 @@ import Layout from './routes/Layout'
 import './index.css'
 
 const App = () => {
-  return ( 
+  return (
     <ReduxProvider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <ApolloProvider client={client}>
-      {/* <ViewerProvider> */}
-      <BrowserRouter>
-      <Layout />
-      </BrowserRouter>
-      {/* </ViewerProvider> */}
-      </ApolloProvider>
-    </MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <ApolloProvider client={client}>
+          <ViewerProvider>
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </ViewerProvider>
+        </ApolloProvider>
+      </MuiThemeProvider>
     </ReduxProvider>
   )
 }

@@ -1,3 +1,4 @@
+import { connect } from "../../../node_modules/react-redux";
 
 
 // Action Names
@@ -55,3 +56,5 @@ export default (state = initialState, action) => {
         }
     }
 }
+
+
