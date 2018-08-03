@@ -127,7 +127,6 @@ module.exports = (postgres) => {
         text: `SELECT * FROM tags, itemtags WHERE itemtags.itemid = $1 AND itemtags.tagid = tags.id`,
         values: [itemid]
       })
-      const tags = await postgres.query(tagsQuery)
       return tags.rows
     },
     async saveNewItem({ item, image, user }) {
