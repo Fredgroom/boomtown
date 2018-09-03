@@ -45,7 +45,8 @@ class AccountForm extends Component {
             {!this.state.formToggle && (
               <FormControl fullWidth className={classes.formControl}>
                 <InputLabel htmlFor="fullname">Username</InputLabel>
-                <Field>
+                <Field
+                render={({ input, meta }) => (
                   <Input
                     id="fullname"
                     type="text"
@@ -54,12 +55,14 @@ class AccountForm extends Component {
                     }}
                     value={''}
                   />
-                </Field>
+                  )}
+                />
               </FormControl>
             )}
             <FormControl fullWidth className={classes.formControl}>
               <InputLabel htmlFor="email">Email</InputLabel>
-              <Field>
+              <Field
+                render={({ input, meta }) => (
                 <Input
                   id="email"
                   type="text"
@@ -67,12 +70,16 @@ class AccountForm extends Component {
                     autoComplete: 'off'
                   }}
                   value={''}
+                  
                 />
-              </Field>
+                )}
+                
+              />
             </FormControl>
             <FormControl fullWidth className={classes.formControl}>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Field>
+              <Field
+                render={({ input, meta }) => (
                 <Input
                   id="password"
                   type="password"
@@ -81,7 +88,8 @@ class AccountForm extends Component {
                   }}
                   value={''}
                 />
-              </Field>
+                )}
+              />
             </FormControl>
             <FormControl className={classes.formControl}>
               <Grid
