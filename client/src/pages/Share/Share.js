@@ -3,15 +3,15 @@ import React from 'react'
 
 import styles from './styles'
 import AccountForm from '../../components/AccountForm';
+import ShareForm from '../../components/ShareItemForm';
 
 const Share = ({ classes }) => {
   return (
     <div>
-      <p>
-        This is the share page located at <code>/share</code>.
-      </p>
-     <AccountForm>
-       </AccountForm> 
+      <h1>
+        Share. Borrow. Prosper.
+      </h1>
+      <ShareForm/>
     </div>
     
   )

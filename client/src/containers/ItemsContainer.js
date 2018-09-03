@@ -3,15 +3,16 @@ import { Query, Mutation } from 'react-apollo'
 import React from 'react'
 
 // @TODO: Uncommment this line when the ViewerProvider is added to the app.
-// import { ViewerContext } from '../context/ViewerProvider'
+import { ViewerContext } from '../context/ViewerProvider'
 // -------------------------------
 
 import {
-  ALL_TAGS_QUERY,
+  // ALL_TAGS_QUERY,
   ALL_ITEMS_QUERY,
-  ALL_USER_ITEMS_QUERY,
-  ADD_ITEM_MUTATION
+  // ALL_USER_ITEMS_QUERY,
+  // ADD_ITEM_MUTATION
 } from '../apollo/queries'
+
 
 const itemsData = ({ render }) => {
  
