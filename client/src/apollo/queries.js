@@ -4,47 +4,47 @@ import gql from 'graphql-tag'
  * Item and user-related queries and mutations.
  */
 
-const ItemFields = gql`
-  fragment ItemFields on Item {
+// const ItemFields = gql`
+//   fragment ItemFields on Item {
 
     
-    # @TODO: Create a fragment to query the following fields for an item:
-    #
-    id
-    title
-    imageurl
-    description
-    created
-    tags {
-      id
-      title
-    }
-    itemowner {
-    id 
-    fullname
-    email
-    bio
-    }
-    borrower {
-      id
-      fullname
-      email
-      bio
-    }
-    #
-    # See the Apollo docs for instructions on how to use fragments:
-    # https://www.apollographql.com/docs/angular/features/fragments.html
-  }
-`
-export const ITEM_QUERY = gql`
-  query item($id: ID!) {
-    item(filter: $id) {
-      ...ItemFields
-    }
-    # @TODO: Query an item by its id and return the ItemFields fragment.
-  }
-  ${ItemFields}
-`
+//     # @TODO: Create a fragment to query the following fields for an item:
+//     #
+//     id
+//     title
+//     imageurl
+//     description
+//     # created
+//     tags {
+//       id
+//       title
+//     }
+//     itemowner {
+//     id 
+//     fullname
+//     email
+//     bio
+//     }
+//     borrower {
+//       id
+//       fullname
+//       email
+//       bio
+//     }
+//     #
+//     # See the Apollo docs for instructions on how to use fragments:
+//     # https://www.apollographql.com/docs/angular/features/fragments.html
+//   }
+// `
+// export const ITEM_QUERY = gql`
+//   query item($id: ID!) {
+//     item(filter: $id) {
+//       ...ItemFields
+//     }
+//     # @TODO: Query an item by its id and return the ItemFields fragment.
+//   }
+//   ${ItemFields}
+// `
 
 export const ALL_ITEMS_QUERY = gql`
  query {
@@ -54,17 +54,17 @@ export const ALL_ITEMS_QUERY = gql`
     description
       }
   }
-  ${ItemFields}
+
 `
 
-export const ALL_USER_ITEMS_QUERY = gql`
- query user($id: ID!, $bio: String, $email: String!, $fullname: String! ) {
-   user(id: ID){
-   ...Itemnfields
- }
-}
- ${ItemFields}
-`
+// export const ALL_USER_ITEMS_QUERY = gql`
+//  query user($id: ID!, $bio: String, $email: String!, $fullname: String! ) {
+//    user(id: ID){
+//    ...Itemnfields
+//  }
+// }
+//  ${ItemFields}
+// `
 
 // export const ALL_TAGS_QUERY = gql`
 //   query {

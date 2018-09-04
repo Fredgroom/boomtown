@@ -1,6 +1,3 @@
-import { connect } from "../../../node_modules/react-redux";
-
-
 // Action Names
     const UPDATE_NEW_ITEM = 'UPDATE_NEW_ITEM'
 
@@ -28,7 +25,7 @@ import { connect } from "../../../node_modules/react-redux";
     };
 
 // Reducer
-const initialState = {
+const ItemReducer = {
     title: 'Foo', 
     description: 'Foo',
     created: new Date(),
@@ -37,18 +34,18 @@ const initialState = {
     tags: []
 };
 
-export default (state = initialState, action) => {
+export default (state = ItemReducer, action) => {
     switch(action.type) {
         case UPDATE_NEW_ITEM: {
             return {...state, ...action.payload}
 
         }
         case RESET_NEW_ITEM: {
-            return initialState;
+            return ItemReducer;
         }
         case RESET_NEW_ITEM_IMAGE: {
             return {
-                ...state, imagurl: initialState.imageurl
+                ...state, imagurl: ItemReducer.imageurl
             };
         }
         default: { 

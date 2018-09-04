@@ -3,13 +3,13 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 // @TODO: Import your reducers
 import newItemReducer from './modules/newitems';
-import newItems from './modules/newitems';
+
 
 
 const middleware = []
 
 const store = createStore(
-  combineReducers(newItems, newItemReducer),
+  combineReducers({newItems: newItemReducer}),
   composeWithDevTools(applyMiddleware(...middleware))
 )
 

@@ -1,6 +1,6 @@
 import { adopt } from 'react-adopt'
 import { Query, Mutation } from 'react-apollo'
-import React from 'react'
+import React from 'react';
 
 // @TODO: Uncommment this line when the ViewerProvider is added to the app.
 import { ViewerContext } from '../context/ViewerProvider'
@@ -18,8 +18,20 @@ const itemsData = ({ render }) => {
  
   return (
     <Query query={ALL_ITEMS_QUERY} variables={{ filter: null }}>
-      {({ data: { items }, loading }) => render({items, loading})}
-    </Query>
+ {({ loading, error, data }) => {
+      if (loading) return null;
+      if (error) return `Error!: ${error}`;
+      console.log(data);
+      console.log('-------');
+      console.log(data.items.title);
+      console.log('-------');
+      console.log(data.items.description);
+      console.log('-------');
+
+      return (
+      `${data.items}`
+      );
+    }}</Query>
   );
 };
 
@@ -44,11 +56,12 @@ const addItem = ({ render }) => {
   /**
    * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
    *
-   * Note: Be sure to use `refetchQueries` to refresh Apollo's cache with the
+   * Note: Be sure to use refetchQueries to refresh Apollo's cache with the
    * latest items for the user.
    */
   return undefined
 }
+
 const ItemsContainer = adopt({
   // @TODO: Uncomment each line as you write the corresponding query.
   // tagData,

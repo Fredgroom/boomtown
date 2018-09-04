@@ -1,12 +1,12 @@
 import { withStyles } from '@material-ui/core/styles'
 import React from 'react'
 import ItemsContainer from '../../containers/ItemsContainer';
-
+import {connect} from 'react-redux';
 import styles from './styles'
 
 const Items = ({ classes }) => {
   return (
-    <ItemsContainer>
+    <ItemsContainer >
   {({ itemsData: { items, loading } }) => {
     return loading
       ? (
@@ -20,7 +20,11 @@ const Items = ({ classes }) => {
   )
 }
 
-export default withStyles(styles)(Items)
+const mapStateToProps = ({ items }) => ({
+  items
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Items));
 
 
 
