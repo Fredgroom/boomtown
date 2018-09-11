@@ -52,6 +52,13 @@ export const ALL_ITEMS_QUERY = gql`
     	id 
     title
     description
+    imageurl
+    # itemowner {
+    #   id
+    # }
+    # borrower {
+    #   id
+    # }
       }
   }
 

@@ -15,23 +15,37 @@ import {
 
 
 const itemsData = ({ render }) => {
- 
+
   return (
     <Query query={ALL_ITEMS_QUERY} variables={{ filter: null }}>
- {({ loading, error, data }) => {
-      if (loading) return null;
-      if (error) return `Error!: ${error}`;
-      console.log(data);
-      console.log('-------');
-      console.log(data.items.title);
-      console.log('-------');
-      console.log(data.items.description);
-      console.log('-------');
+      {({ loading, error, data }) => {
+        if (loading) return null;
+        if (error) return `Error!: ${error}`;
+        // console.log(data);
+        // console.log('-------');
+        // console.log(data.items.title);
+        // console.log('-------');
+        // console.log(data.items.description);
+        // console.log('-------');
+        // console.log(data.items.imageurl);
 
-      return (
-      `${data.items}`
-      );
-    }}</Query>
+
+        return (
+          <div>{data.items.map((item, index) => {
+            return (
+              <div key={index}>
+                <img src={item.imageurl} />
+                <h1>{item.title}</h1>
+                <p>{item.description}</p>
+                <p>{item.created}</p>
+                
+
+              </div>
+            )
+
+          })}</div>
+        );
+      }}</Query>
   );
 };
 
