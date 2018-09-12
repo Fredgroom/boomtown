@@ -21,14 +21,6 @@ const itemsData = ({ render }) => {
       {({ loading, error, data }) => {
         if (loading) return null;
         if (error) return `Error!: ${error}`;
-        console.log(data);
-        console.log('-------');
-        console.log(data.items.title);
-        console.log('-------');
-        console.log(data.items.description);
-        console.log('-------');
-        console.log(data.items.imageurl);
-
 
         return (
           <div>{data.items.map((item, index) => {
@@ -37,7 +29,13 @@ const itemsData = ({ render }) => {
                 <img src={item.imageurl} />
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>
+                <p>{item.itemowner.fullname}</p>
                 <p>{item.created}</p>
+                <p>{item.tags.map((tag) => {
+                    //could be edited to remove last , from string
+                    return `${tag.title}, `;
+                })
+                }</p>
                 
 
               </div>
