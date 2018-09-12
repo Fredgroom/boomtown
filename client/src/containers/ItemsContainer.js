@@ -21,13 +21,13 @@ const itemsData = ({ render }) => {
       {({ loading, error, data }) => {
         if (loading) return null;
         if (error) return `Error!: ${error}`;
-        // console.log(data);
-        // console.log('-------');
-        // console.log(data.items.title);
-        // console.log('-------');
-        // console.log(data.items.description);
-        // console.log('-------');
-        // console.log(data.items.imageurl);
+        console.log(data);
+        console.log('-------');
+        console.log(data.items.title);
+        console.log('-------');
+        console.log(data.items.description);
+        console.log('-------');
+        console.log(data.items.imageurl);
 
 
         return (

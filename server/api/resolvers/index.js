@@ -126,9 +126,9 @@ module.exports = function (app) {
         //   }
         //   // -------------------------------
         // },
-        async itemowner({ id }, args, { pgResource }, info) {
+        async itemowner({ ownerid }, args, { pgResource }, info) {
           try {
-            const itemowner = await pgResource.getUserById(id)
+            const itemowner = await pgResource.getUserById(ownerid)
             return itemowner;
           } catch (e) {
             throw new ApolloError(e);
@@ -142,9 +142,10 @@ module.exports = function (app) {
             throw new ApolloError(e);
           }
         },
-        async borrower({ id }, args, { pgResource }, info) {
+        async borrower({ borrowerid }, args, { pgResource }, info) {
+          console.log('*** arguments[0]:', arguments[0]);
           try {
-            const borrower = await pgResource.getBorrowedItemsForUser(id);
+            const borrower = await pgResource.getUserById(borrowerid);
             return borrower;
           } catch (e) {
             throw new ApolloError(e);
