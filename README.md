@@ -1,4 +1,4 @@
-# Boomtown 🏙
+# Boomtown 
 
 ## Server
 
