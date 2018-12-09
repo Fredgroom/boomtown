@@ -15,7 +15,8 @@ CREATE TABLE "public"."users" (
     "id" serial PRIMARY KEY,
     "email" text NOT NULL,
     "fullname" text NOT NULL,
-    "bio" text
+    "bio" text,
+    "password" text,
 );
 
 CREATE TABLE "public"."items" (

@@ -30,12 +30,13 @@ const itemsData = ({ render }) => {
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>
                 <p>{item.itemowner.fullname}</p>
-                <p>{item.created}</p>
+                <p>{item.created.substring(0, 15)}</p>
                 <p>{item.tags.map((tag) => {
                     //could be edited to remove last , from string
                     return `${tag.title}, `;
                 })
                 }</p>
+                
                 
 
               </div>

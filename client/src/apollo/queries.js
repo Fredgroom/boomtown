@@ -8,34 +8,34 @@ import gql from 'graphql-tag'
 //   fragment ItemFields on Item {
 
     
-//     # @TODO: Create a fragment to query the following fields for an item:
-//     #
-//     id
-//     title
-//     imageurl
-//     description
-//     # created
-//     tags {
-//       id
-//       title
-//     }
-//     itemowner {
-//     id 
-//     fullname
-//     email
-//     bio
-//     }
-//     borrower {
-//       id
-//       fullname
-//       email
-//       bio
-//     }
-//     #
-//     # See the Apollo docs for instructions on how to use fragments:
-//     # https://www.apollographql.com/docs/angular/features/fragments.html
-//   }
-// `
+// //     # @TODO: Create a fragment to query the following fields for an item:
+// //     #
+// //     id
+// //     title
+// //     imageurl
+// //     description
+// //     # created
+// //     tags {
+// //       id
+// //       title
+// //     }
+// //     itemowner {
+// //     id 
+// //     fullname
+// //     email
+// //     bio
+// //     }
+// //     borrower {
+// //       id
+// //       fullname
+// //       email
+// //       bio
+// //     }
+// //     #
+// //     # See the Apollo docs for instructions on how to use fragments:
+// //     # https://www.apollographql.com/docs/angular/features/fragments.html
+// //   }
+`
 // export const ITEM_QUERY = gql`
 //   query item($id: ID!) {
 //     item(filter: $id) {
@@ -64,6 +64,7 @@ export const ALL_ITEMS_QUERY = gql`
       id
       title
     }
+    created
       }
   }
 
@@ -72,7 +73,7 @@ export const ALL_ITEMS_QUERY = gql`
 // export const ALL_USER_ITEMS_QUERY = gql`
 //  query user($id: ID!, $bio: String, $email: String!, $fullname: String! ) {
 //    user(id: ID){
-//    ...Itemnfields
+//    ...Itemfields
 //  }
 // }
 //  ${ItemFields}

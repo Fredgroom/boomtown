@@ -21,8 +21,8 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true
-    };
+username: '',
+password: '',    };
   }
 
   render() {
@@ -53,7 +53,9 @@ class AccountForm extends Component {
                     inputProps={{
                       autoComplete: 'off'
                     }}
-                    value={''}
+                    value={this.state.value}
+                    onChange={(event, newValue) =>
+                      this.setState({ fullname: newValue })}
                   />
                   )}
                 />
@@ -69,8 +71,9 @@ class AccountForm extends Component {
                   inputProps={{
                     autoComplete: 'off'
                   }}
-                  value={''}
-                  
+                  value={this.state.value}
+                  onChange={(event, newValue) =>
+                      this.setState({ fullname: newValue })}
                 />
                 )}
                 
@@ -86,7 +89,9 @@ class AccountForm extends Component {
                   inputProps={{
                     autoComplete: 'off'
                   }}
-                  value={''}
+                  value={this.state.value}
+                  onChange={(event, newValue) =>
+                    this.setState({ fullname: newValue })}
                 />
                 )}
               />

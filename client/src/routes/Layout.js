@@ -15,7 +15,7 @@ export default () => (
           {/* <Menu /> */}
           <Switch>
             <Route exact path="/items" component={Items} />
-            <Route exact path="/welcome" component={Home} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/share" component={Share} />
             <Route exact path="/profile" component={ViewerProfile} />
             {/* <Route exact path="/profile/:[ID_HERE]" component={UserProfile} /> */}

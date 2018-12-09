@@ -9,17 +9,18 @@ function tagsQueryString(tags, itemid, result) {
   return length === 0
     ? `${result};`
     : tags.shift() &&
-    tagsQueryString(
-      tags,
-      itemid,
-      `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
-    )
+        tagsQueryString(
+          tags,
+          itemid,
+          `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
+        )
 }
-module.exports = (postgres) => {
+module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: 'INSERT into users(fullname, email, password) VALUES ($1, $2, $3) RETURNING *', // @TODO: Authentication - Server
+        text:
+          'INSERT into users(fullname, email, password) VALUES ($1, $2, $3) RETURNING *', // @TODO: Authentication - Server
         values: [fullname, email, password]
       }
       try {
@@ -77,13 +78,12 @@ module.exports = (postgres) => {
       }
 
       const user = await postgres.query(findUserQuery)
-      return user.rows[0];
+      return user.rows[0]
       // -------------------------------
     },
     async getItems(idToOmit) {
-      const whereClause = idToOmit ? `WHERE items.ownerid != $1` : '';
+      const whereClause = idToOmit ? `WHERE items.ownerid != $1` : ''
       const items = await postgres.query({
-
         text: ` 
         SELECT
           id, 
@@ -97,33 +97,32 @@ module.exports = (postgres) => {
         ${whereClause}`,
         values: idToOmit ? [idToOmit] : []
       })
-      return items.rows;
+      return items.rows
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
         text: `select * From items where ownerid = $1`,
         values: [id]
       })
-      return items.rows;
+      return items.rows
     },
     async getBorrowedItemsForUser(userid) {
       const items = await postgres.query({
         text: `select * From items where borrowerid = $1`,
         values: [userid]
       })
-      return items.rows;
+      return items.rows
     },
     async getTags() {
       const tags = await postgres.query({
         text: `SELECT id, title
         FROM tags`,
         values: []
-
-      });
+      })
       return tags.rows
     },
     async getTagsForItem(itemid) {
-       const tags = await postgres.query({
+      const tags = await postgres.query({
         text: `SELECT * FROM tags, itemtags WHERE itemtags.itemid = $1 AND itemtags.tagid = tags.id`,
         values: [itemid]
       })
